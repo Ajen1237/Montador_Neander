@@ -10,15 +10,15 @@ int main(){
     char leitura[1000];
     
     // criando a variável ponteiro para o arquivo
-    FILE *pont_arqm;
-    FILE *pont_arql;
+    FILE *pont_arqm; //Ponteiro de Modificacao
+    FILE *pont_arql; //Ponteiro de Leitura
 
     //abrindo arquivo para leitura
-    pont_arql = fopen("arquivo.txt", "r");
+    pont_arql = fopen("prog1.asm", "r");
 
     //confirmacao da abertura de arquivo
     if (pont_arql == NULL){
-        printf("ERRO! O arquivo nao foi aberto!\n");
+        printf("ERRO! O arquivo nao foi aberto! Verifique se o arquivo está na mesma pasta que o Tradutor.exe\n");
         return 1;//encerra o programa caso de erro
     } else {
         printf("O arquivo foi aberto com sucesso!\n");
@@ -45,7 +45,7 @@ int main(){
 
     //leitura de caracteres
     while(fgets(leitura, sizeof(leitura), pont_arql) != NULL){
-    // printf("%s", leitura);    
+        leitura[strcspn(leitura, "\n")] = 0;   //Remove o caractere de nova linha ('\n')    
         if (strcmp(leitura, "NOP") == 0){
             opcode=0;
             fwrite(&opcode,sizeof(opcode),1,pont_arqm);
