@@ -5,8 +5,9 @@
 #include <locale.h>
 int main(){
     setlocale(LC_ALL, "Portuguese");
-    int opcode, endereco, i;
-    char leitura[1000],leitor[100];
+    unsigned char opcode;
+    int endereco;
+    char leitura[1000];
     
     // criando a variável ponteiro para o arquivo
     FILE *pont_arqm;
@@ -17,7 +18,7 @@ int main(){
 
     //confirmacao da abertura de arquivo
     if (pont_arql == NULL){
-        printf("ERRO! O arquivo não foi aberto!\n");
+        printf("ERRO! O arquivo nao foi aberto!\n");
         return 1;//encerra o programa caso de erro
     } else {
         printf("O arquivo foi aberto com sucesso!\n");
@@ -32,81 +33,106 @@ int main(){
     }
 
     //printar o cabecalho do codigo
-    fprintf(pont_arqm,"03 4E 44 52");
+    opcode = 3;
+    fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+    opcode = 78;
+    fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+    opcode = 68;
+    fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+    opcode = 82;
+    fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+
 
     //leitura de caracteres
     while(fgets(leitura, sizeof(leitura), pont_arql) != NULL){
     // printf("%s", leitura);    
-        if (strstr(leitura, "NOP") == 0){
+        if (strcmp(leitura, "NOP") == 0){
             opcode=0;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
         }
-        if (strstr(leitura, "STA") == 0){
-            opcode=10;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-            fscanf("falta algo aqui","%i",&endereco);
+        if (strcmp(leitura, "STA") == 0){
+            opcode=16;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            opcode=0;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            fscanf(pont_arql,"%i",&endereco);
             opcode= endereco;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
         }
-        else if (strstr(leitura, "LDA") == 0){
-            opcode=20;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-            fscanf("falta algo aqui","%i",&endereco);
+        if (strcmp(leitura, "LDA") == 0){
+            opcode=32;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            opcode=0;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            fscanf(pont_arql,"%i",&endereco);
             opcode= endereco;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
         }
-        else if (strstr(leitura, "ADD") == 0){
-            opcode=30;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-            fscanf("falta algo aqui","%i",&endereco);
+        if (strcmp(leitura, "ADD") == 0){
+            opcode=48;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            opcode=0;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            fscanf(pont_arql,"%i",&endereco);
             opcode= endereco;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
         }
-        else if (strstr(leitura, "OR") == 0){
-            opcode=40;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-            fscanf("falta algo aqui","%i",&endereco);
+        if (strcmp(leitura, "OR") == 0){
+            opcode=64;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            opcode=0;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            fscanf(pont_arql,"%i",&endereco);
             opcode= endereco;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
         }
-        else if (strstr(leitura, "AND") == 0){
-            opcode=50;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-            fscanf("falta algo aqui","%i",&endereco);
-            opcode= endereco;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-        }
-        else if (strstr(leitura, "NOT") == 0){
-            opcode=60;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-            fscanf("falta algo aqui","%i",&endereco);
-            opcode= endereco;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-        }
-        else if (strstr(leitura, "JMP") == 0){
+        if (strcmp(leitura, "AND") == 0){
             opcode=80;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-            fscanf("falta algo aqui","%i",&endereco);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            opcode=0;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            fscanf(pont_arql,"%i",&endereco);
             opcode= endereco;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
         }
-        else if (strstr(leitura, "JN") == 0){
-            opcode=90;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-            fscanf("falta algo aqui","%i",&endereco);
+        if (strcmp(leitura, "NOT") == 0){
+            opcode=96;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            opcode=0;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+        }
+        if (strcmp(leitura, "JMP") == 0){
+            opcode=128;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            opcode=0;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            fscanf(pont_arql,"%i",&endereco);
             opcode= endereco;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
         }
-        else if (strstr(leitura, "JZ") == 0){
-            opcode='A0';
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
-            fscanf("falta algo aqui","%i",&endereco);
+        if (strcmp(leitura, "JN") == 0){
+            opcode=144;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            opcode=0;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            fscanf(pont_arql,"%i",&endereco);
             opcode= endereco;
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
         }
-        if (strstr(leitura, "HLT") == 0){
-            opcode='F0';
-            fwrite(&pont_arql,sizeof(pont_arql),1,pont_arqm);
+        if (strcmp(leitura, "JZ") == 0){
+            opcode=160;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            opcode=0;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            fscanf(pont_arql,"%i",&endereco);
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+        }
+        if (strcmp(leitura, "HLT") == 0){
+            opcode=240;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
+            opcode=0;
+            fwrite(&opcode,sizeof(opcode),1,pont_arqm);
         }
     }
     // fechando arquivo
@@ -114,7 +140,7 @@ int main(){
     fclose(pont_arqm);
         
     //mensagem para o usuário
-    printf("O arquivo convertido foi criado com sucesso!");
+    printf("O arquivo foi convertido com sucesso!");
         
     system("pause");
     return(0);
