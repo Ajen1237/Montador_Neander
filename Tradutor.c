@@ -28,7 +28,7 @@ int main(){
         printf("O arquivo foi aberto com sucesso!\n");
     }
 
-    // Abrindo o arquivo para escrita
+    // Abrindo o arquivo FIXO para escrita
     pont_arqm = fopen("prog1.mem", "a");
     if (pont_arqm == NULL) {
         printf("Erro ao abrir o arquivo para escrita!\n");
