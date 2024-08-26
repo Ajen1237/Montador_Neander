@@ -18,7 +18,7 @@ int main(){
     FILE *pont_arql; //Ponteiro de Leitura
 
     //abrindo arquivo FIXO para leitura
-    pont_arql = fopen("arquivo.txt", "r");
+    pont_arql = fopen("arquivo.asm", "r");
 
     //confirmacao da abertura de arquivo
     if (pont_arql == NULL){
