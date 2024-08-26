@@ -1,3 +1,7 @@
+// Alunas:
+// Amanda Jen SP3154068
+// Kethelyn Alves dos Santos SP3161242
+
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -13,7 +17,7 @@ int main(){
     FILE *pont_arqm; //Ponteiro de Modificacao
     FILE *pont_arql; //Ponteiro de Leitura
 
-    //abrindo arquivo para leitura
+    //abrindo arquivo FIXO para leitura
     pont_arql = fopen("prog1.asm", "r");
 
     //confirmacao da abertura de arquivo
